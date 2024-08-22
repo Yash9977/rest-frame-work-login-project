@@ -13,9 +13,39 @@ class studentAPI (APIView):
        return Response({'status':400 ,'payload':serializers.data , 'message':'student'})
        
     def post(self,request):
-        pass
-    def patch(self,request):
-        pass
-    def put(self,request):
-        pass
+       
+       serializers = studentserializers(data=request.data)
+       if not serializers.is_valid():
+           print(serializers.errors)
+           return Response({'status':100,'errors':serializers.errors,'message':'not valid user '})
+       serializers.save()
+       return Response({'status':101 ,'payload':serializers.data , 'message':'student new entery'})
     
+    def patch(self,request,id):
+        
+        try: 
+            student_obj =student.objects.all(id=id)
+            serializers = studentserializers(student_obj,data=request.data,partial=True)
+            if not serializers.is_valid():
+                print(serializers.errors)
+                return Response({'status':100,'errors':serializers.errors,'message':'not valid user '})
+            serializers.save()
+            return Response({'status':101 ,'payload':serializers.data , 'message':'student new entery'})
+        
+        except Exception as e:
+            return Response({'status':500,'message':'invalid id'})
+   
+    def put(self,request,id):
+       
+        try:
+            student_obj =student.objects.all(id=id)
+            serializers = studentserializers(student_obj,data=request.data)
+            if not serializers.is_valid():
+                print(serializers.errors)
+                return Response({'status':100,'errors':serializers.errors,'message':'not valid user '})
+            serializers.save()
+            return Response({'status':101 ,'payload':serializers.data , 'message':'student new entery'})
+        
+        except Exception as e:
+            return Response({'status':500,'message':'invalid id'})
+   
