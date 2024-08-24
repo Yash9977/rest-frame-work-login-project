@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from .models import *
 from .Serializers import *
 import json
+from django.contrib.auth.models import User
+from rest_framework_simplejwt.tokens import RefreshToken
 # Create your views here.
 
 class studentAPI (APIView):
@@ -50,4 +52,15 @@ class studentAPI (APIView):
         
         except Exception as e:
             return Response({'status':500,'message':'invalid id'})
-   
+
+class register(APIView):
+    def post(self,request):
+        serializers = Userserializers(data=request.data)
+        if not serializers.is_valid():
+            print(serializers.errors)
+            return Response({'status':100,'errors':serializers.errors,'message':'not valid user '})
+        serializers.save()
+        user=User.objects.get(username=serializers.data['username'])
+        refresh = RefreshToken.for_user(user)
+        return Response({'status':1 ,'refresh':str(refresh), 'access':str(refresh.access_token),'message':'student register'})
+           

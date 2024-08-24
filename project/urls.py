@@ -20,6 +20,7 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('student/', studentAPI.as_view()),
     path('student/<id>', studentAPI.as_view()),
+    path('register/', register.as_view()),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
 ]
