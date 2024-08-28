@@ -21,8 +21,11 @@ urlpatterns = [
     path('student/', studentAPI.as_view()),
     path('student/<id>', studentAPI.as_view()),
     path('register/', register.as_view()),
+    path('Generics_View/', Generics_View.as_view()),
+     path('Generics_View1/<id>', Generics_View.as_view()),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
+    
 ]
    
    

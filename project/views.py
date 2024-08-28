@@ -4,9 +4,21 @@ from rest_framework.response import Response
 from .models import *
 from .Serializers import *
 import json
+from rest_framework import viewsets,generics
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 # Create your views here.
+
+class Generics_View(generics.ListAPIView,generics.ListCreateAPIView):
+    
+    queryset = student.objects.all()
+    serializer_class= studentserializers
+
+class Generics_View1(generics.UpdateAPIView,generics.DestroyAPIView):
+    
+    queryset = student.objects.all()
+    serializer_class = studentserializers
+    lookup_field='id'
 
 class studentAPI (APIView):
     def get(self,request):
