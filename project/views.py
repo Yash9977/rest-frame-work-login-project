@@ -22,7 +22,7 @@ class Generics_View1(generics.UpdateAPIView,generics.DestroyAPIView):
 
 class studentAPI (APIView):
     def get(self,request):
-       
+       print(request.GET)
        student_obj =student.objects.all()
        serializers = studentserializers(student_obj,many=True)
        return Response({'status':400 ,'payload':serializers.data , 'message':'student'})
